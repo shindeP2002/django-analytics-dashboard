@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Django Analytics Dashboard</title>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        #map {
+            height: 400px;
+            margin-bottom: 20px;
+        }
+
+        .dashboard {
+            background: #f4f4f4;
+            padding: 15px;
+            border-radius: 8px;
+            width: 300px;
+            margin-bottom: 20px;
+        }
+
+        .dashboard h2 {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>📊 Analytics Dashboard</h1>
+
+<!-- Map -->
+<h2>India Map</h2>
+<div id="map"></div>
+
+<!-- Dashboard -->
+<div class="dashboard">
+    <h2>Summary</h2>
+    <p>Total Events: <span id="events">Loading...</span></p>
+    <p>Total Clicks: <span id="clicks">Loading...</span></p>
+    <p>Total Logins: <span id="logins">Loading...</span></p>
+</div>
+
+<!-- Chart -->
+<h2>Button Click Analytics</h2>
+<canvas id="buttonChart"></canvas>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<!-- ✅ Chart.js (IMPORTANT) -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    // =========================
+    // 1. Initialize Map
+    // =========================
+    var map = L.map('map').setView([22.9734, 78.6569], 5);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap'
+    }).addTo(map);
+
+    // =========================
+    // 2. Load India GeoJSON
+    // =========================
+    fetch('https://raw.githubusercontent.com/johan/world.geo.json/master/countries/IND.geo.json')
+        .then(response => response.json())
+        .then(data => {
+            L.geoJSON(data, {
+                style: {
+                    color: "blue",
+                    weight: 2
+                }
+            }).addTo(map);
+        })
+        .catch(error => {
+            console.error("GeoJSON load error:", error);
+        });
+
+    // =========================
+    // 3. Fetch Analytics Summary
+    // =========================
+    function loadAnalytics() {
+        fetch('http://127.0.0.1:8000/api/analytics/summary/', {
+            method: 'GET',
+            credentials: 'include'
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("User not authenticated");
+            }
+            return response.json();
+        })
+        .then(data => {
+            document.getElementById('events').innerText = data.total_events;
+            document.getElementById('clicks').innerText = data.total_button_clicks;
+            document.getElementById('logins').innerText = data.total_logins;
+        })
+        .catch(error => {
+            console.error(error);
+            alert("⚠️ Please login in Django Admin first!");
+        });
+    }
+
+    loadAnalytics();
+
+    // =========================
+    // 4. Fetch Button Analytics (Chart)
+    // =========================
+    function loadChart() {
+        fetch('http://127.0.0.1:8000/api/analytics/buttons/', {
+            method: 'GET',
+            credentials: 'include'
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("User not authenticated");
+            }
+            return response.json();
+        })
+        .then(data => {
+
+            const labels = data.map(item => item.button_name);
+            const values = data.map(item => item.total_clicks);
+
+            new Chart(document.getElementById('buttonChart'), {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Button Clicks',
+                        data: values,
+                        backgroundColor: ['#4CAF50', '#2196F3', '#FF9800']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: true
+                        }
+                    }
+                }
+            });
+
+        })
+        .catch(error => {
+            console.error("Chart error:", error);
+        });
+    }
+
+    loadChart();
+
+</script>
+
+</body>
+</html>
