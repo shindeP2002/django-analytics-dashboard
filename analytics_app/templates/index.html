@@ -29,19 +29,7 @@
             margin-bottom: 10px;
         }
 
-        .btn {
-        margin-top: 10px;
-        padding: 10px 15px;
-        background-color: #4CAF50;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-.btn:hover {
-    background-color: #45a049;
-}
+        
     </style>
 </head>
 <body>
@@ -54,6 +42,11 @@
 <h2>India Map</h2>
 <div id="map"></div>
 
+<button onclick="logEvent('button_click', 'test_button')" class="btn">
+        Click Me 🚀
+    </button>
+
+
 <!-- Dashboard -->
 <div class="dashboard">
     <h2>Summary</h2>
@@ -61,9 +54,6 @@
     <p>Total Clicks: <span id="clicks">Loading...</span></p>
     <p>Total Logins: <span id="logins">Loading...</span></p>
     
-    <button onclick="logEvent('button_click', 'test_button')" class="btn">
-        Click Me 🚀
-    </button>
 
 </div>
 
@@ -179,25 +169,7 @@
     loadChart();
 
 
-    function logEvent(eventType, buttonName) {
-    fetch('/api/events/', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            event_type: eventType,
-            button_name: buttonName
-        })
-    })
-    .then(() => {
-        alert("Event Logged!");
-        loadAnalytics();  // refresh numbers
-        loadChart();      // refresh chart
-    })
-    .catch(error => console.error(error));
-}
-
+  
 </script>
 
 </body>
