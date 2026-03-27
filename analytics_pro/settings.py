@@ -38,8 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'analytics_app',
-]
+    'analytics_app.apps.AnalyticsAppConfig',]
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
@@ -138,3 +137,7 @@ ALLOWED_HOSTS = ['*']
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+
+if os.environ.get('RENDER'):
+    from django.core.management import call_command
+    call_command('migrate')

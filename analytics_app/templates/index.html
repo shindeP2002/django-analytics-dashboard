@@ -87,7 +87,7 @@
     // 3. Fetch Analytics Summary
     // =========================
     function loadAnalytics() {
-        fetch('http://127.0.0.1:8000/api/analytics/summary/', {
+        fetch('/api/analytics/summary/', {
             method: 'GET',
             credentials: 'include'
         })
@@ -114,7 +114,7 @@
     // 4. Fetch Button Analytics (Chart)
     // =========================
     function loadChart() {
-        fetch('http://127.0.0.1:8000/api/analytics/buttons/', {
+        fetch('/api/analytics/buttons/', {
             method: 'GET',
             credentials: 'include'
         })
