@@ -17,7 +17,9 @@ Interactive dashboard with charts
 India map visualization using Leaflet (GeoJSON)
 Admin panel for managing data
 Deployed on cloud
+
 🛠️ Tech Stack
+
 Backend: Django, Django REST Framework
 Frontend: HTML, CSS, JavaScript
 Charts: Chart.js
@@ -26,6 +28,7 @@ Database: SQLite
 Deployment: Render
 
 📂 Project Structure
+
 django-analytics-dashboard/
 │
 ├── analytics_app/
@@ -48,6 +51,7 @@ django-analytics-dashboard/
 └── README.md
 
 ⚙️ Setup Instructions
+
 1️⃣ Clone Repository
 
 git clone https://github.com/shindeP2002/django-analytics-dashboard.git
@@ -86,6 +90,7 @@ Use your credentials to:
 
 Add Event Logs
 Manage user activity
+
 🔌 API Endpoints
 🔹 POST /api/events/
 
@@ -125,12 +130,15 @@ Response:
 ]
 
 📊 Dashboard Features
+
 📍 India map visualization
 📈 Bar chart for button clicks
+
 📦 Summary section:
 Total Events
 Total Clicks
 Total Logins
+
 🚀 Deployment (Render)
 
 Steps followed:
