@@ -29,6 +29,12 @@
             margin-bottom: 10px;
         }
 
+        .chart-container{
+            width:500px;
+            height:300px;
+            margin-top:20px
+        }
+
         
     </style>
 </head>
@@ -59,7 +65,9 @@
 
 <!-- Chart -->
 <h2>Button Click Analytics</h2>
-<canvas id="buttonChart"></canvas>
+<div class="chart-container">
+    <canvas id="buttonChart"></canvas>
+</div>
 
 <!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
@@ -125,49 +133,38 @@
     // 4. Fetch Button Analytics (Chart)
     // =========================
     function loadChart() {
-        fetch('/api/analytics/buttons/', {
-            method: 'GET',
-            credentials: 'include'
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("User not authenticated");
+    fetch('/api/analytics/buttons/', {
+        method: 'GET',
+        credentials: 'include'
+    })
+    .then(response => response.json())
+    .then(data => {
+
+        const labels = data.map(item => item.button_name);
+        const values = data.map(item => item.total_clicks);
+
+        new Chart(document.getElementById('buttonChart'), {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Button Clicks',
+                    data: values
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
             }
-            return response.json();
-        })
-        .then(data => {
-
-            const labels = data.map(item => item.button_name);
-            const values = data.map(item => item.total_clicks);
-
-            new Chart(document.getElementById('buttonChart'), {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Button Clicks',
-                        data: values,
-                        backgroundColor: ['#4CAF50', '#2196F3', '#FF9800']
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            display: true
-                        }
-                    }
-                }
-            });
-
-        })
-        .catch(error => {
-            console.error("Chart error:", error);
         });
-    }
 
-    loadChart();
+    })
+    .catch(error => console.error(error));
+}
 
+loadChart();
+
+    
 
   
 </script>
