@@ -1,15 +1,9 @@
-## Screenshots
+Django Analytics Dashboard is a full-stack web application that tracks user events and displays analytics using REST APIs and interactive visualizations.
 
-### Dashboard
-![Dashboard](screenshots/dashboard.png)
-
-### Chart
-![Chart](screenshots/chart.png)
-
-### API
-![API](screenshots/summaryApi.png)
-![API](screenshots/api.png)
-
-
-### Admin Panel
-![Admin](screenshots/admin.png)
+Features:
+- Event logging (login, button clicks)
+- Aggregated analytics using Django ORM
+- REST APIs using Django REST Framework
+- Interactive dashboard with Chart.js
+- India map visualization using Leaflet
+- Deployed on Render
