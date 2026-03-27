@@ -34,6 +34,10 @@
 
 <h1>📊 Analytics Dashboard</h1>
 
+<button onclick="logEvent('button_click', 'test_button')">
+    Click Me 🚀
+</button>
+
 <!-- Map -->
 <h2>India Map</h2>
 <div id="map"></div>
@@ -156,6 +160,26 @@
     }
 
     loadChart();
+
+
+    function logEvent(eventType, buttonName) {
+    fetch('/api/events/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            event_type: eventType,
+            button_name: buttonName
+        })
+    })
+    .then(() => {
+        alert("Event Logged!");
+        loadAnalytics();  // refresh numbers
+        loadChart();      // refresh chart
+    })
+    .catch(error => console.error(error));
+}
 
 </script>
 
