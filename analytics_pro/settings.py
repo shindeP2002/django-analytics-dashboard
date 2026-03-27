@@ -38,8 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'analytics_app',
-]
+    'analytics_app.apps.AnalyticsAppConfig',]
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
