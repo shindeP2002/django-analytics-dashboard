@@ -3,10 +3,12 @@
 A full-stack analytics tracking system built using Django, Django REST Framework, Chart.js, and Leaflet.js.
 This project tracks user events and displays aggregated analytics with interactive visualizations.
 
-🚀 Live Demo
+🚀 Live Demo:-
 👉 https://django-analytics-dashboard-3.onrender.com/
 
-📌 Features
+📌 Features :-
+
+Uses Django ORM aggregation instead of manual loops
 Track user events (login, button clicks)
 Store event data with timestamps
 REST APIs for analytics
