@@ -137,3 +137,7 @@ ALLOWED_HOSTS = ['*']
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+
+if os.environ.get('RENDER'):
+    from django.core.management import call_command
+    call_command('migrate')
